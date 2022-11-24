@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
 import authRoute from './Routes/Auth.js'
 import hotelsRoute from './Routes/Hotels.js'
 import roomsRoute from './Routes/Rooms.js'
@@ -13,7 +14,6 @@ const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGO_CONNECTION_STRING)
         console.log('Connected to MongoDB')
-
     } catch (e) {
         throw (e)
     }
@@ -24,6 +24,7 @@ mongoose.connection.on('disconnected', () => {
 })
 
 // middleware
+app.use(cookieParser())
 app.use(express.json())
 app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/hotels", hotelsRoute)
