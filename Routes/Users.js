@@ -1,21 +1,27 @@
 import express from 'express'
-import {verifyToken} from '../Utils/VerifyToken.js'
+import {verifyAdmin, verifyToken, verifyUser} from '../Utils/VerifyToken.js'
 import { deleteUser, getAllUser, getUser, updateUser } from '../Controllers/user.js'
 
 const router = express.Router()
 
-router.get('/checkauthentication', verifyToken, (req, res, next) => {
-    res.send("User youre logged in successfully")
-})
+// router.get('/checkauthentication', verifyToken, (req, res, next) => {
+//     res.send("User youre logged in successfully")
+// })
+// router.get('/checkuser/:id', verifyUser, (req, res, next) => {
+//     res.send("Hello user, youre logged in successfully")
+// })
+// router.get('/checkadmin', verifyAdmin, (req, res, next) => {
+//     res.send("Hello admin, youre logged in successfully")
+// })
 
 // UPDATE
-router.put("/:id", updateUser)
+router.put("/:id", verifyUser, updateUser)
 // DELETE
-router.delete("/:id", deleteUser)
+router.delete("/:id", verifyUser, deleteUser)
 // GET
-router.get("/:id", getUser)
+router.get("/:id", verifyUser, getUser)
 // GET ALL
-router.get("/", getAllUser)
+router.get("/", verifyAdmin, getAllUser)
 
 
 export default router
