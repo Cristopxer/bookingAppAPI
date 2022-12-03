@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 import authRoute from './Routes/Auth.js'
 import hotelsRoute from './Routes/Hotels.js'
 import roomsRoute from './Routes/Rooms.js'
@@ -24,6 +25,7 @@ mongoose.connection.on('disconnected', () => {
 })
 
 // middleware
+app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 app.use("/api/v1/auth", authRoute)
